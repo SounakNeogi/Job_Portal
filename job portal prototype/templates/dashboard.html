@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <link rel="stylesheet" href="../static/style_index.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchButton = document.querySelector('.cta-button');
+            const jobDescriptionForm = document.getElementById('jobDescriptionForm');
+
+            searchButton.addEventListener('click', function() {
+                jobDescriptionForm.style.visibility = 'visible';
+            });
+        });
+    </script>
+    <!-- Your HTML content -->
+<script>
+    function searchJobDescription() {
+        const jobDescription = document.getElementById('jobDescription').value;
+
+        // AJAX request to send the job description to Flask route
+        fetch('/search_job_description', {
+            method: 'POST',
+            body: new URLSearchParams({ job_description: jobDescription }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data from the server
+            console.log('Result from server:', data.result);
+            // Do something with the result, like displaying it on the page
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+   
+</script>
+<!-- Your HTML content -->
+
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <div class="login-signup">
+            <a href="/logout" class="button">Log out </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#jobs">Jobs</a></li>
+                <li><a href="#companies">Companies</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Find Your Dream Job</h2>
+            <p>Search for jobs, explore companies, and get hired.</p>
+            <a href="#search" class="cta-button">Search Jobs</a>
+        </section>
+        <div style="visibility: hidden;">
+            <form id="jobDescriptionForm">
+                <label for="jobDescription">Job Description:</label><br>
+                <input id="jobDescription" name="jobDescription" ></input><br><br>
+                <input type="submit" value="Submit" onsubmit="searchJobDescription() ">
+            </form>
+        </div>
+
+
+        <section class="features">
+            <div class="feature">
+                <h3>Welcome {{session["username"]}}</h3>
+                <h3>
+                {{session["email"]}}
+
+                </h3>
+                <h3>
+                    {{session["phone"]}}
+                </h3>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Job Portal</p>
+    </footer>
+</body>
+</html>
