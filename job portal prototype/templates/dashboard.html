@@ -23,9 +23,9 @@
         // AJAX request to send the job description to Flask route
         fetch('/search_job_description', {
             method: 'POST',
-            body: new URLSearchParams({ job_description: jobDescription }),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+            body: JSON.stringify({ job_description: jobDescription }),
+             headers: {
+                'Content-Type': 'application/json'
             },
         })
         .then(response => response.json())
@@ -67,10 +67,10 @@
             <a href="#search" class="cta-button">Search Jobs</a>
         </section>
         <div style="visibility: hidden;">
-            <form id="jobDescriptionForm">
+            <form id="jobDescriptionForm" onsubmit="searchJobDescription() ">
                 <label for="jobDescription">Job Description:</label><br>
-                <input id="jobDescription" name="jobDescription" ></input><br><br>
-                <input type="submit" value="Submit" onsubmit="searchJobDescription() ">
+                <input id="jobDescription" name="jobDescription" required></input><br><br>
+                <button type="submit" value="Submit"> Submit </button>
             </form>
         </div>
 
